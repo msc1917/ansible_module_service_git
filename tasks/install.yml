@@ -1,0 +1,7 @@
+---
+- name: Install GIT-Package
+  apt:
+    name: [ "git" ]
+    state: present
+    update_cache: no
+  become: yes
