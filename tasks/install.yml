@@ -1,7 +1,31 @@
 ---
+- name: Register Keys for Github CLI
+  apt_key:
+    url: "{{ item }}"
+    state: present
+  become: yes
+  ignore_errors: yes
+  with_items:
+    - https://cli.github.com/packages/githubcli-archive-keyring.gpg
+  when: 
+    - ansible_distribution == "Debian"
+
+- name: Add Github CLI repository for Debian Buster
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+    update_cache:     "{{ apt_proxy.update_repo | default(no) }}"
+    cache_valid_time: "{{ apt_proxy.update_cache | default(0) }}"
+  become: yes
+  with_items:
+    - deb https://cli.github.com/packages stable main
+  when: 
+    - ansible_distribution == "Debian"
+
 - name: Install GIT-Package
   apt:
-    name: [ "git" ]
+    name: [ "git", 
+            "gh" ]
     state: present
     update_cache:     "{{ apt_proxy.update_repo | default(no) }}"
     cache_valid_time: "{{ apt_proxy.update_cache | default(0) }}"
