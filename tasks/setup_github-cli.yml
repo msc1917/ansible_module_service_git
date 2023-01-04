@@ -1,0 +1,33 @@
+---
+- name: Create github-cli-config-directory
+  file:
+    path: "/home/{{ item.name }}/.config/gh"
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: 0751
+  become: yes
+  with_items:
+    - "{{ admin_users }}"
+
+- name: Generate github-cli-config config.yml
+  template:
+    src: "config.yml.j2"
+    dest: "/home/{{ item.name }}/.config/gh/config.yml"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: '0600'
+  become: yes
+  with_items:
+    - "{{ admin_users }}"
+
+- name: Generate github-cli-config hosts.yml
+  template:
+    src: "hosts.yml.j2"
+    dest: "/home/{{ item.name }}/.config/gh/hosts.yml"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: '0600'
+  become: yes
+  with_items:
+    - "{{ admin_users }}"
