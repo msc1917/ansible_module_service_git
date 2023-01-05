@@ -1,4 +1,4 @@
 github.com:
     oauth_token: {{ github-cli.oauth_token }}
     user: {{ github-cli.user }}
-    git_protocol: {{ github-cli.git_protocol }}
+    git_protocol: {% if item.github-cli.git_protocol is defined %}{{ item.github-cli.git_protocol }}{% else %}{{ github-cli.git_protocol }}{% endif %}

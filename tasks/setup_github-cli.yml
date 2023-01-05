@@ -9,6 +9,10 @@
   become: yes
   with_items:
     - "{{ admin_users }}"
+  when:
+    - item.github-cli is defined
+    - item.github-cli.user is defined
+    - item.github-cli.oauth_token is defined
 
 - name: Generate github-cli-config config.yml
   template:
@@ -20,6 +24,10 @@
   become: yes
   with_items:
     - "{{ admin_users }}"
+  when:
+    - item.github-cli is defined
+    - item.github-cli.user is defined
+    - item.github-cli.oauth_token is defined
 
 - name: Generate github-cli-config hosts.yml
   template:
@@ -31,3 +39,7 @@
   become: yes
   with_items:
     - "{{ admin_users }}"
+  when:
+    - item.github-cli is defined
+    - item.github-cli.user is defined
+    - item.github-cli.oauth_token is defined
