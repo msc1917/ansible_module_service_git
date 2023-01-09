@@ -1,3 +1,6 @@
 ---
 - name: Install GIT
   include_tasks: install.yml
+  
+- name: Setup Github-CLI
+  include_tasks: setup_github-cli.yml
